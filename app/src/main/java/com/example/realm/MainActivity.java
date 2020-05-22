@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import java.io.FileNotFoundException;
 
 import androidx.appcompat.app.AppCompatActivity;
 import io.realm.Realm;
@@ -17,30 +14,21 @@ import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Realm realm;
     Personaje realmPersonaje;
     Personaje personaje = new Personaje();
-    Button insertButton, deleteButton, queryButton, updateButton, campButton;
+    Button insertButton, deleteButton, queryButton, updateButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .name("tlourealm.realm")
-                .schemaVersion(0)
-                .migration(new Migration())
-                .deleteRealmIfMigrationNeeded()
-                .build();
-
-        realm = Realm.getInstance(config);
-//        Realm.setDefaultConfiguration(config);
+        RealmConfiguration config = new RealmConfiguration.Builder().name("tlourealm.realm").schemaVersion(0).build();
+        Realm.setDefaultConfiguration(config);
 
         insertButton = findViewById(R.id.insert);
         updateButton = findViewById(R.id.update);
         deleteButton = findViewById(R.id.delete);
         queryButton = findViewById(R.id.query);
-        campButton = findViewById(R.id.camp);
 
         insertButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +58,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, BuscarPersonaje.class);
             startActivity(intent);
         }
-        });
-
-        campButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, BuscarCampamento.class);
-                startActivity(intent);            }
         });
     }
 
